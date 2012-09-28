@@ -1,4 +1,4 @@
-
+Android app for the [Cari Status Halal][1] website
 Issues
 ======
 * Phonegap can't open existing sqlite database. Workaround:-
@@ -10,3 +10,5 @@ Issues
     - Workaround - delete lines in SQLitePlugin.java that start with:-
 
         // for old Android SDK remove lines from HERE:
+
+[1]:http://halal.smach.net/
