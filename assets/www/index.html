@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Cordova</title>
+<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="SQLitePlugin.js"></script>
+<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+</head>
+<body>
+<h1>Cari Status Halal</h1>
+<div align="center">
+	<input type="text" name="keyword" size="30" />
+</div>
+<div align="center">
+	<button type="button" id="btn_cari" />Cari</button>
+</div>
+<script>
+function queryDB(tx) {
+    tx.executeSql('SELECT * FROM halal_product LIMIT 3 OFFSET 0', [], querySuccess, errorCB);
+}
+
+function querySuccess(tx, results) {
+    var len = results.rows.length;
+    console.log("DEMO table: " + len + " rows found.");
+    for (var i=0; i<len; i++){
+        console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).name);
+    }
+}
+
+function errorCB(err) {
+    alert("Error processing SQL: "+err.code);
+}
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+	var db = window.sqlitePlugin.openDatabase("Databases", "1.0", "Halal", 1000000);
+	$('#btn_cari').click(function() {
+		db.transaction(queryDB, errorCB);
+	});
+}
+function alertDismissed() {
+    // do something
+}
+</script>
+</body>
+</html>
