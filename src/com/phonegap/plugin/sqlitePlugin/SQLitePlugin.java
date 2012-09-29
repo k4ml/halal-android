@@ -230,29 +230,7 @@ public class SQLitePlugin extends Plugin {
 				try {
 					for (int i = 0; i < colCount; ++i) {
 						key = cur.getColumnName(i);
-						// for old Android SDK remove lines from HERE:
-						if(android.os.Build.VERSION.SDK_INT >= 11)
-						{
-							switch(cur.getType (i))
-							{
-								case Cursor.FIELD_TYPE_NULL:
-									row.put(key, null);
-									break;
-								case Cursor.FIELD_TYPE_INTEGER:
-									row.put(key, cur.getInt(i));
-									break;
-								case Cursor.FIELD_TYPE_FLOAT:
-									row.put(key, cur.getFloat(i));
-									break;
-								case Cursor.FIELD_TYPE_STRING:
-									row.put(key, cur.getString(i));
-									break;
-								case Cursor.FIELD_TYPE_BLOB:
-									row.put(key, cur.getBlob(i));
-									break;
-							}
-						}
-						else // to HERE.
+						
 						{
 							row.put(key, cur.getString(i));
 						}
