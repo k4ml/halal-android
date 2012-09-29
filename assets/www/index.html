@@ -19,8 +19,9 @@
 
 </div>
 <script>
-function queryDB(tx) {
-    tx.executeSql('SELECT * FROM halal_product LIMIT 3 OFFSET 0', [], querySuccess, errorCB);
+function searchProduct(tx, keyword) {
+    var kw = '%' + keyword + '%';
+    tx.executeSql("SELECT * FROM halal_product WHERE name LIKE ?", [kw], querySuccess, errorCB);
 }
 
 function querySuccess(tx, results) {
@@ -30,6 +31,12 @@ function querySuccess(tx, results) {
     for (var i=0; i<len; i++){
         $(list).append($("<li/>", {text:results.rows.item(i).name + " Expired: " + results.rows.item(i).expired}));
     }
+
+    if (len === 0) {
+        $(list).append($("<li/>", {text: "Tiada keputusan ditemui"}));
+    }
+
+    $("#search-result").empty();
     list.appendTo("#search-result");
 }
 
@@ -41,7 +48,10 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
 	var db = window.sqlitePlugin.openDatabase("Databases", "1.0", "Halal", 1000000);
 	$('#btn_cari').click(function() {
-		db.transaction(queryDB, errorCB);
+                var keyword = $("input[name=keyword]")[0].value;
+		db.transaction(function(tx) {
+                    searchProduct(tx, keyword);
+                }, errorCB);
 	});
 }
 function alertDismissed() {
