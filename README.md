@@ -1,5 +1,5 @@
 Android app for the [Cari Status Halal][1] website
-Issues
+Issues:
 ======
 * Phonegap can't open existing sqlite database. Workaround:-
     - http://www.raymondcamden.com/index.cfm/2012/7/27/Guest-Blog-Post-Shipping-a-populated-SQLite-DB-with-PhoneGap
